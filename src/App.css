@@ -1,0 +1,17 @@
+body {
+  margin-left: 20vw;
+  margin-right: 20vw;
+  margin-top: 10vh;
+}
+
+button {
+  margin-bottom: 2em;
+}
+
+.number {
+  padding: 1em;
+  margin: 0.5em;
+  border: dashed black 1px;
+  border-radius: 10px;
+  background-color: lightgrey;
+}
