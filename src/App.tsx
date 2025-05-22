@@ -1,40 +1,31 @@
 import { useState } from "react";
-import { unstable_ViewTransition as ViewTransition } from "react";
-import { startTransition } from "react";
+import Shuffle from "./components/Shuffle";
+import ImageCarousel from "./components/ImageCarousel";
+import { Pages } from "./types";
 
 import "./App.css";
+import NavBar from "./components/NavBar";
 
 function App() {
-  const [numbers, setNumbers] = useState<number[]>([1, 2, 3, 4, 5]);
-  const [reverse, setReverse] = useState<boolean>(false);
+  const [selected, setSelected] = useState<Pages>(Pages.Shuffle);
 
-  const orderedNumbers = [];
-  for (let i = 0; i < numbers.length; i++) {
-    if (Math.random() < 0.5) {
-      orderedNumbers.push(numbers[i]);
-    } else {
-      orderedNumbers.unshift(numbers[i]);
-    }
-  }
+  const toShow = {
+    [Pages.Shuffle]: <Shuffle />,
+    [Pages.ImageCarousel]: <ImageCarousel />,
+  }[selected];
 
-  const reverseHandler = () => {
-    startTransition(() => {
-      setReverse((curr) => !curr);
-    });
+  const handleNavigate = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    page: Pages,
+  ) => {
+    e.preventDefault();
+    setSelected(page);
   };
 
   return (
     <>
-      <button onClick={reverseHandler}>Shuffle</button>
-      <section>
-        {orderedNumbers.map((n) => {
-          return (
-            <ViewTransition name={`view-transition-${n}`}>
-              <span className="number">{n}</span>
-            </ViewTransition>
-          );
-        })}
-      </section>
+      <NavBar onNavigate={handleNavigate} />
+      {toShow}
     </>
   );
 }
