@@ -1,24 +1,21 @@
-import { Pages } from "../types";
+import { Link } from "react-router-dom";
 
-interface NavBarProps {
-  onNavigate: (e: React.MouseEvent<HTMLAnchorElement>, page: Pages) => void;
-}
-
-export default function NavBar({ onNavigate }: NavBarProps) {
+export default function NavBar() {
   return (
     <>
       <nav>
         <ul>
           <li>
-            <a href="#">Article </a>
+            <a href="#">Article</a>
           </li>
         </ul>
         <ul>
-          {Object.values(Pages).map((page) => (
-            <li key={page}>
-              <a onClick={(e) => onNavigate(e, page)}>{page}</a>
-            </li>
-          ))}
+          <li>
+            <Link to="/">Shuffle</Link>
+          </li>
+          <li>
+            <Link to="/imagecarousel">Image Carousel</Link>
+          </li>
         </ul>
       </nav>
     </>

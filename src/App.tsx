@@ -1,32 +1,16 @@
-import { useState } from "react";
-import Shuffle from "./components/Shuffle";
+import { Route, Routes } from "react-router-dom";
+import Layout from "./pages/Layout";
 import ImageCarousel from "./components/ImageCarousel";
-import { Pages } from "./types";
-
-import "./App.css";
-import NavBar from "./components/NavBar";
+import Shuffle from "./components/Shuffle";
 
 function App() {
-  const [selected, setSelected] = useState<Pages>(Pages.Shuffle);
-
-  const toShow = {
-    [Pages.Shuffle]: <Shuffle />,
-    [Pages.ImageCarousel]: <ImageCarousel />,
-  }[selected];
-
-  const handleNavigate = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    page: Pages,
-  ) => {
-    e.preventDefault();
-    setSelected(page);
-  };
-
   return (
-    <>
-      <NavBar onNavigate={handleNavigate} />
-      {toShow}
-    </>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Shuffle />} />
+        <Route path="imagecarousel" element={<ImageCarousel />} />
+      </Route>
+    </Routes>
   );
 }
 
