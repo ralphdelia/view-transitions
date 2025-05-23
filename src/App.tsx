@@ -8,7 +8,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Shuffle />} />
-        <Route path="imagecarousel" element={<ImageCarousel />} />
+        <Route path="/imagecarousel" element={<ImageCarousel />} />
       </Route>
     </Routes>
   );

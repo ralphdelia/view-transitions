@@ -1,0 +1,40 @@
+.carousel {
+  position: relative;
+  width: 640px;
+  height: 320px;
+  margin: 2rem auto;
+  /* optional background so you can see the container */
+  /* background: #f5f5f5; */
+}
+
+.stack-image {
+  position: absolute;
+  object-fit: cover;
+  border-radius: 8px;
+  /* optional shadow */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Left stack */
+.stack-image.one {
+  width: 80px;
+  height: 80px;
+  top: calc(50% - 40px);
+  left: 0;
+}
+
+/* Center stack */
+.stack-image.two {
+  width: 200px;
+  height: 200px;
+  top: calc(50% - 100px);
+  left: calc(50% - 100px);
+}
+
+/* Right stack */
+.stack-image.three {
+  width: 80px;
+  height: 80px;
+  top: calc(50% - 40px);
+  left: calc(100% - 80px);
+}

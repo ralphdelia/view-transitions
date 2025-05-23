@@ -7,9 +7,12 @@ import {
 const Shuffle = () => {
   const [numbers, setNumbers] = useState<number[]>([1, 2, 3, 4, 5]);
 
+  const shuffle = <T,>(arr: T[]): T[] =>
+    arr.toSorted(() => Math.random() - 0.5);
+
   const shuffleHandler = () => {
     startTransition(() => {
-      setNumbers((curr) => curr.toSorted(() => Math.random() - 0.5));
+      setNumbers((curr) => shuffle(curr));
     });
   };
 
