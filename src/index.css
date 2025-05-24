@@ -1,40 +1,74 @@
-.carousel {
+.gallery {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.gallery > div:nth-child(1) {
+  width: 150px;
+  height: 175px;
   position: relative;
-  width: 640px;
-  height: 320px;
-  margin: 2rem auto;
-  /* optional background so you can see the container */
-  /* background: #f5f5f5; */
+  border: dashed black 1px;
+  border-radius: 10px;
+  background-color: lightgray;
 }
 
-.stack-image {
+.gallery > div:nth-child(2) {
+  width: 250px;
+  height: 300px;
+  border-radius: 10px;
+  background-color: lightgray;
+}
+
+.gallery > div:nth-child(3) {
+  width: 150px;
+  height: 175px;
+  position: relative;
+  border: dashed black 1px;
+  border-radius: 10px;
+  background-color: lightgray;
+}
+
+.side-stack {
+  padding: 1em;
   position: absolute;
-  object-fit: cover;
-  border-radius: 8px;
-  /* optional shadow */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
 }
 
-/* Left stack */
-.stack-image.one {
-  width: 80px;
-  height: 80px;
-  top: calc(50% - 40px);
-  left: 0;
+.center-stack {
+  padding: 1em;
+  /* top: 0;
+  left: 0; */
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
 }
 
-/* Center stack */
-.stack-image.two {
-  width: 200px;
-  height: 200px;
-  top: calc(50% - 100px);
-  left: calc(50% - 100px);
+.side-stack-container > div:nth-child(1) {
+  top: 2px;
+  transform: rotate(-1.3deg);
 }
 
-/* Right stack */
-.stack-image.three {
-  width: 80px;
-  height: 80px;
-  top: calc(50% - 40px);
-  left: calc(100% - 80px);
+.side-stack-container > div:nth-child(2) {
+  top: 10px;
+  transform: rotate(-2deg);
+}
+
+.side-stack-container > div:nth-child(3) {
+  top: 20px;
+  transform: rotate(1.5deg);
+}
+
+.side-stack-container > div:nth-child(4) {
+  top: 30px;
+  transform: rotate(-3deg);
+}
+
+.center {
+  display: flex;
+  justify-content: center;
 }
