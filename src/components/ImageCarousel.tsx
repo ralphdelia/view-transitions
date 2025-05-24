@@ -18,46 +18,42 @@ export default function ImageCarousel() {
 
   const handleNext = () => {
     startTransition(() => {
-      requestAnimationFrame(() => {
-        setBuckets((c) => {
-          if (c[0].length === 0 && c[1].length === 0) {
-            return c;
-          }
+      setBuckets((c) => {
+        if (c[0].length === 0 && c[1].length === 0) {
+          return c;
+        }
 
-          const first = [...c[0].slice(0, -1)];
+        const first = [...c[0].slice(0, -1)];
 
-          let second: number[] = [];
-          if (c[0].length > 0) {
-            second = [...c[0].slice(-1)];
-          }
+        let second: number[] = [];
+        if (c[0].length > 0) {
+          second = [...c[0].slice(-1)];
+        }
 
-          const third = [...c[2]];
-          if (c[1].length > 0) {
-            third.push(c[1][0]);
-          }
+        const third = [...c[2]];
+        if (c[1].length > 0) {
+          third.push(c[1][0]);
+        }
 
-          return [first, second, third];
-        });
+        return [first, second, third];
       });
     });
   };
 
   const handlePrev = () => {
     startTransition(() => {
-      requestAnimationFrame(() => {
-        setBuckets((c) => {
-          if (c[1].length === 0 && c[2].length === 0) {
-            return c;
-          }
+      setBuckets((c) => {
+        if (c[1].length === 0 && c[2].length === 0) {
+          return c;
+        }
 
-          const first = [...c[0]];
-          if (c[1].length > 0) {
-            first.push(c[1][0]);
-          }
-          const second = [...c[2].slice(-1)];
-          const third = [...c[2].slice(0, -1)];
-          return [first, second, third];
-        });
+        const first = [...c[0]];
+        if (c[1].length > 0) {
+          first.push(c[1][0]);
+        }
+        const second = [...c[2].slice(-1)];
+        const third = [...c[2].slice(0, -1)];
+        return [first, second, third];
       });
     });
   };
@@ -74,7 +70,7 @@ export default function ImageCarousel() {
               {bucket.map((n, j) => {
                 // console.log(`bucket:${i} ${JSON.stringify(n)}`);
                 return (
-                  <ViewTransition name={`name-${n.id}`}>
+                  <ViewTransition name={`name-${n.id}`} key={Math.random()}>
                     <div
                       className={i === 1 ? "center-stack" : "side-stack"}
                       style={{ backgroundColor: n.color, zIndex: j }}
