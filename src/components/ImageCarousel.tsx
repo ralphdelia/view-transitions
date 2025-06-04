@@ -4,83 +4,76 @@ import {
   unstable_ViewTransition as ViewTransition,
 } from "react";
 
+interface Card {
+  id: number;
+  color: string
+}
+type StackType = Card[];
+
+const moveCardForward = (prevStacks: StackType[]) => {
+  const [leftStack, centerStack, rightStack] = prevStacks;
+
+  if (leftStack.length === 0 && centerStack.length === 0) {
+    return prevStacks;
+  }
+
+  const updatedLeft = leftStack.slice(0, -1);
+
+  const updatedCenter =
+    leftStack.length > 0 ? leftStack.slice(-1) : [];
+
+  const updatedRight = [...rightStack];
+  if (centerStack.length > 0) {
+    updatedRight.push(centerStack[0]);
+  }
+
+  return [updatedLeft, updatedCenter, updatedRight];
+}
+
+const moveCardBackward = (prevStacks: StackType[]) => {
+  const [leftStack, centerStack, rightStack] = prevStacks;
+
+  if (centerStack.length === 0 && rightStack.length === 0) {
+    return prevStacks;
+  }
+
+  const updatedLeft = [...leftStack];
+  if (centerStack.length > 0) {
+    updatedLeft.push(centerStack[0]);
+  }
+
+  const updatedCenter = rightStack.slice(-1);
+  const updatedRight = rightStack.slice(0, -1);
+
+  return [updatedLeft, updatedCenter, updatedRight];
+}
+
 export default function ImageCarousel() {
-  const [buckets, setBuckets] = useState([
+  const [stacks, setStacks] = useState<StackType[]>([
     [
-      { id: 1, text: "something", color: "green" },
-      { id: 2, text: "adfasdfasdfsaother else", color: "plum" },
-      { id: 3, text: "another else", color: "blue" },
-      { id: 4, text: "something else", color: "lightblue" },
+      { id: 1, color: "plum" },
+      { id: 2, color: "orange" },
+      { id: 3, color: "green" },
+      { id: 4, color: "royalblue" },
     ],
     [],
     [],
   ]);
 
   const handleNext = () => {
-    startTransition(() => {
-      setBuckets((c) => {
-        if (c[0].length === 0 && c[1].length === 0) {
-          return c;
-        }
-
-        const first = [...c[0].slice(0, -1)];
-
-        let second: number[] = [];
-        if (c[0].length > 0) {
-          second = [...c[0].slice(-1)];
-        }
-
-        const third = [...c[2]];
-        if (c[1].length > 0) {
-          third.push(c[1][0]);
-        }
-
-        return [first, second, third];
-      });
-    });
+    startTransition(() => setStacks(moveCardForward));
   };
 
   const handlePrev = () => {
-    startTransition(() => {
-      setBuckets((c) => {
-        if (c[1].length === 0 && c[2].length === 0) {
-          return c;
-        }
-
-        const first = [...c[0]];
-        if (c[1].length > 0) {
-          first.push(c[1][0]);
-        }
-        const second = [...c[2].slice(-1)];
-        const third = [...c[2].slice(0, -1)];
-        return [first, second, third];
-      });
-    });
+    startTransition(() => setStacks(moveCardBackward));
   };
 
   return (
     <>
       <div className="grid gallery">
-        {buckets.map((bucket, i) => {
+        {stacks.map((stack, i) => {
           return (
-            <div
-              className={i == 1 ? "" : "side-stack-container"}
-              key={`bucket-${i}`}
-            >
-              {bucket.map((n, j) => {
-                // console.log(`bucket:${i} ${JSON.stringify(n)}`);
-                return (
-                  <ViewTransition name={`name-${n.id}`} key={Math.random()}>
-                    <div
-                      className={i === 1 ? "center-stack" : "side-stack"}
-                      style={{ backgroundColor: n.color, zIndex: j }}
-                    >
-                      {/* <p>{n.text}</p> */}
-                    </div>
-                  </ViewTransition>
-                );
-              })}
-            </div>
+            <Stack stack={stack} stackPosition={i} key={`stack-${i}`}/>
           );
         })}
       </div>
@@ -94,5 +87,29 @@ export default function ImageCarousel() {
         </button>
       </div>
     </>
+  );
+}
+
+interface StackProps {
+  stack: StackType;
+  stackPosition: number
+}
+
+function Stack({stack, stackPosition}: StackProps) {
+  return (
+    <div
+      className={stackPosition === 1 ? "" : "side-stack-container"}
+    >
+      {stack.map((n) => {
+        return (
+          <ViewTransition name={`name-${n.id}`} key={Math.random()}>
+            <div
+              className={stackPosition === 1 ? "center-stack" : "side-stack"}
+              style={{ backgroundColor: n.color }}
+            >{n.id}</div>
+          </ViewTransition>
+        );
+      })}
+    </div>
   );
 }
