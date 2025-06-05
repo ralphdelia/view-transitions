@@ -50,14 +50,14 @@ const moveCardBackward = (prevStacks: StackType[]) => {
 
 export default function ImageCarousel() {
   const [stacks, setStacks] = useState<StackType[]>([
+    [],
+    [],
     [
-      { id: 1, color: "plum" },
-      { id: 2, color: "orange" },
-      { id: 3, color: "green" },
       { id: 4, color: "royalblue" },
+      { id: 3, color: "green" },
+      { id: 2, color: "orange" },
+      { id: 1, color: "plum" },
     ],
-    [],
-    [],
   ]);
 
   const handleNext = () => {
@@ -78,11 +78,11 @@ export default function ImageCarousel() {
         })}
       </div>
 
-      <div className="" role="group">
+      <div role="group">
         <button className="outline" onClick={handlePrev}>
           Prev
         </button>
-        <button className="" onClick={handleNext}>
+        <button onClick={handleNext}>
           Next
         </button>
       </div>
@@ -98,15 +98,17 @@ interface StackProps {
 function Stack({stack, stackPosition}: StackProps) {
   return (
     <div
-      className={stackPosition === 1 ? "" : "side-stack-container"}
+      className={stackPosition === 1 ? "center-stack-container" : "side-stack-container"}
     >
-      {stack.map((n) => {
+      {stack.map((cardObject) => {
         return (
-          <ViewTransition name={`name-${n.id}`} key={Math.random()}>
+          <ViewTransition name={`name-${cardObject.id}`}>
             <div
-              className={stackPosition === 1 ? "center-stack" : "side-stack"}
-              style={{ backgroundColor: n.color }}
-            >{n.id}</div>
+              className={stackPosition === 1 ? "center-card" : "side-card"}
+              style={{ backgroundColor: cardObject.color }}
+            >
+              {cardObject.id}
+            </div>
           </ViewTransition>
         );
       })}

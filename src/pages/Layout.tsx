@@ -5,7 +5,6 @@ export default function Layout() {
   return (
     <div>
       <NavBar />
-      <hr />
       <Outlet />
     </div>
   );
